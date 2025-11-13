@@ -6,10 +6,45 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "../prisma/generated"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model Company {
+  id        String     @id @default(cuid())
+  name      String
+  shipments Shipment[]
+
+  @@map("companies")
+}
+
+model Shipment {
+  id                 String    @id @default(cuid())
+  createdAt          DateTime
+  trackingNumber     String
+  provider           String
+  mode               String
+  originCountry      String
+  destinationCountry String
+  companyId          String
+  company            Company   @relation(fields: [companyId], references: [id])
+  invoices           Invoice[]
+
+  @@unique([trackingNumber, provider])
+  @@map("shipments")
+}
+
+model Invoice {
+  id             String   @id @default(cuid())
+  shipmentId     String
+  shipment       Shipment @relation(fields: [shipmentId], references: [id])
+  invoicedWeight Float
+  invoicedPrice  Float
+  createdAt      DateTime @default(now())
+
+  @@map("invoices")
 }
