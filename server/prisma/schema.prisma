@@ -24,7 +24,7 @@ model Company {
 
 model Shipment {
   id                 String    @id @default(cuid())
-  createdAt          DateTime
+  createdAt          DateTime  @default(now())
   trackingNumber     String
   provider           String
   mode               String
@@ -40,11 +40,12 @@ model Shipment {
 
 model Invoice {
   id             String   @id @default(cuid())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
   shipmentId     String
   shipment       Shipment @relation(fields: [shipmentId], references: [id])
   invoicedWeight Float
   invoicedPrice  Float
-  createdAt      DateTime @default(now())
 
   @@map("invoices")
 }
