@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node -r tsconfig-paths/register src/server.ts'",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'node --loader ts-node/esm -r tsconfig-paths/register src/server.ts'",
     "build": "tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate"

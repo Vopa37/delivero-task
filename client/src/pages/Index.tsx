@@ -1,10 +1,12 @@
 import {useShipments} from "@/hooks/useShipments.ts";
+import ShipmentList from "@/components/shipment/ShipmentList.tsx";
 
 const Index = () => {
     const {data} = useShipments();
 
-    console.log(data);
-    return <div>Welcome to the Index Page</div>;
+    return(
+        data ? <ShipmentList shipments={data}/> : <div>Loading...</div>
+    );
 }
 
 export default Index;

@@ -1,4 +1,4 @@
-export type ShipmentDto = {
+export type ShipmentType = {
     "id": string,
     "createdAt": string,
     "trackingNumber": string,
@@ -10,10 +10,5 @@ export type ShipmentDto = {
     "company": {
         "id": string,
         "name": string
-    },
-    "invoice": {
-        "id": string,
-        "invoicedPrice": number,
-        "invoicedWeight": number
     }
 };
