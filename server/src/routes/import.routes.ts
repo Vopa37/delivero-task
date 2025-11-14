@@ -1,13 +1,22 @@
 import {Router, type Request, type Response} from "express";
 import {PrismaClient, Prisma} from "@prisma/client";
 import type {ImportInputDto} from "@shared/dto/ImportInputDto.ts";
+import multer from 'multer';
 
 const router = Router();
 
 const prisma = new PrismaClient()
 
-router.post("/", async (req: Request, res: Response) => {
-    const {invoices} = req.body as ImportInputDto;
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
+
+router.post("/", upload.single('file'), async (req: Request, res: Response) => {
+    const file = req.file;
+    if (!file) return res.status(400).send('No file uploaded');
+
+    const jsonString = file.buffer.toString('utf-8');
+
+    const invoices: ImportInputDto = JSON.parse(jsonString);
 
     try {
         for (const invoice of invoices) {
