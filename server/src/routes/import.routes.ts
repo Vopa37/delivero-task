@@ -8,7 +8,7 @@ const router = Router();
 const prisma = new PrismaClient()
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage });
+const upload = multer({ storage , limits: { fileSize: 50 * 1024 * 1024 }});
 
 router.post("/", upload.single('file'), async (req: Request, res: Response) => {
     const file = req.file;

@@ -40,6 +40,7 @@ const ShipmentListItem = (
                 </div>
                 <div className="flex justify-between mt-2">
                     <div className="flex flex-col justify-between gap-2">
+                        <p className="text-green-400 font-bold">{invoice.invoicedWeight} Kg</p>
                         <p className="text-orange-400 font-bold">{invoice.invoicedPrice} Kč</p>
                         <div className="inline">
                             <CountryRenderer countryCode={originCountry}/>
