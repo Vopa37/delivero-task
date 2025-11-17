@@ -1,4 +1,4 @@
-export type ImportInputDto = {
+export type ImportRequestDto = {
     id: string
     invoicedWeight: number
     invoicedPrice: number,

@@ -1,8 +1,8 @@
-import type {ShipmentDto} from "@shared/dto/ShipmentDto.ts";
+import type {ShipmentResponseDto} from "@shared/dto/ShipmentResponseDto.ts";
 import ShipmentListItem from "@/components/shipment/ShipmentListItem.tsx";
 
 const ShipmentList = ({shipments}: {
-    shipments: ShipmentDto[]
+    shipments: ShipmentResponseDto[]
 }) => {
     return <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         {shipments.map((data) => (

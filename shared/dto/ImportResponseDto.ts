@@ -1,4 +1,4 @@
-export type ImportOutputDto = {
+export type ImportResponseDto = {
     success: boolean;
     count: number;
 }

@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {api} from "@/hooks/api.ts";
-import type {ImportOutputDto} from "@shared/dto/ImportOutputDto";
+import type {ImportResponseDto} from "@shared/dto/ImportResponseDto.ts";
 
 export function useImport(){
     const queryClient = useQueryClient();
@@ -10,7 +10,7 @@ export function useImport(){
             const formData = new FormData();
             formData.append("file", file);
 
-            const res = await api<ImportOutputDto>('/import',{
+            const res = await api<ImportResponseDto>('/import',{
                 method: 'POST',
                 body: formData,
             });

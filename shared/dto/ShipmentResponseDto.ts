@@ -1,4 +1,4 @@
-export type ShipmentDto = {
+export type ShipmentResponseDto = {
     "id": string,
     "createdAt": string,
     "trackingNumber": string,

@@ -1,12 +1,20 @@
 import {Router, Response} from "express";
 import {PrismaClient} from "@prisma/client";
-import {ShipmentDto} from "@shared/dto/ShipmentDto";
+import {ShipmentResponseDto} from "@shared/dto/ShipmentResponseDto.ts";
 
 const prisma = new PrismaClient();
 const router = Router();
 
-router.get('/', async (req, res: Response<ShipmentDto[]>) => {
+router.get('/', async (req, res: Response<ShipmentResponseDto[]>) => {
+
+    const companiesQuery = req.query.companies as string | undefined;
+
+    const companyIds = companiesQuery
+        ? companiesQuery.split(',')
+        : undefined;
+
     const data = await prisma.shipment.findMany({
+        where: companyIds ? { companyId: { in: companyIds } } : undefined,
         include: {
             company: true,
             invoices: {
@@ -21,7 +29,7 @@ router.get('/', async (req, res: Response<ShipmentDto[]>) => {
         },
     });
 
-    const shipments: ShipmentDto[] = data.map((shipment) => ({
+    const shipments: ShipmentResponseDto[] = data.map((shipment) => ({
         id: shipment.id,
         createdAt: shipment.createdAt.toISOString(),
         trackingNumber: shipment.trackingNumber,
