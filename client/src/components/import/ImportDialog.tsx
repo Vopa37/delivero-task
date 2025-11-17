@@ -30,7 +30,7 @@ export function ImportDialog({open, onOpenChange}:{open: boolean, onOpenChange: 
                     Import invoices from JSON file
                 </DialogHeader>
                 {
-                    importFile ? <ImportPreview file={importFile}/> : <Input type="file" id="importFile" accept="application/json" onChange={handleFileChange}/>
+                    importFile ? <ImportPreview file={importFile} setFile={setImportFile}/> : <Input type="file" id="importFile" accept="application/json" onChange={handleFileChange}/>
                 }
                 <DialogFooter>
                     <DialogClose asChild>

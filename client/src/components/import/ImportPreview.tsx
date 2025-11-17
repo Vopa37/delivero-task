@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
+import {Button} from "@/components/ui/button.tsx";
 
-const ImportPreview = ({file}: {file: File}) => {
+const ImportPreview = ({file, setFile}: {file: File, setFile: (state: File | null)=>void}) => {
     const [jsonData, setJsonData] = useState<string | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -57,8 +58,9 @@ const ImportPreview = ({file}: {file: File}) => {
 
     return (
         <div className="w-full p-4">
-            <div className="mb-2">
-                <strong>File:</strong> {file?.name}
+            <div className="mb-2 flex justify-between">
+                <span><strong>File:</strong> {file?.name}</span>
+                <Button onClick={()=>{setFile(null)}}>Clear</Button>
             </div>
 
             {loading && <div>Loading...</div>}
