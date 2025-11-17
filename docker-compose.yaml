@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: delivero_db
+    restart: always
+    environment:
+      POSTGRES_USER: delivero
+      POSTGRES_PASSWORD: delivero_password321
+      POSTGRES_DB: delivero
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U delivero -d delivero"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://delivero:delivero_password321@delivero_db:5432/delivero?schema=public
+    depends_on:
+      - db
+    command: ["sh", "-c", "npx prisma generate && npx prisma migrate dev --name init && npm run dev"]
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "5173:5173"
+    depends_on:
+      - server
+volumes:
+  postgres_data:
